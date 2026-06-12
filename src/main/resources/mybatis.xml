@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!-- MyBatis 核心配置文件 -->
+<configuration>
+    <properties resource="db.properties"/>
+    <!--配置日志-->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+    <!-- 配置 PageHelper 分页插件（plugins 必须在 environments 之前） -->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"></plugin>
+    </plugins>
+
+
+    <!--
+        environments: 配置数据库环境，可以配置多个，通过 default 属性指定默认使用的环境
+        default="test": 表示默认使用 id 为 "test" 的环境
+    -->
+    <environments default="test">
+        <environment id="test">
+            <!--
+                transactionManager: 配置事务管理器
+                type="JDBC": 使用 JDBC 原生事务管理（直接调用 connection.commit/rollback）
+                可选值: MANAGED（由容器如 Spring 来管理事务）
+            -->
+            <transactionManager type="JDBC"/>
+            <!--
+                dataSource: 配置数据源（数据库连接池）
+                type="POOLED": 使用 MyBatis 内置连接池（推荐，可复用连接，提升性能）
+                可选值: UNPOOLED（每次新建连接）、JNDI（使用容器的 JNDI 数据源）
+            -->
+
+            <dataSource type="POOLED">
+                <!-- MySQL 8.x 的 JDBC 驱动类名 -->
+                <property name="driver" value="${jdbc.driver}"/>
+                <!-- 数据库连接地址：连接本地 test 库，禁用 SSL，设置时区为上海，字符编码为 UTF-8 -->
+                <property name="url" value="${jdbc.url}"/>
+                <!-- 数据库用户名 -->
+                <property name="username" value="${jdbc.username}"/>
+                <!-- 数据库密码 -->
+                <property name="password" value="${jdbc.password}"/>
+
+            </dataSource>
+
+        </environment>
+    </environments>
+
+    <!--
+        mappers: 注册 SQL 映射文件，告诉 MyBatis 去哪里找 SQL 语句
+        resource: 以类路径资源的方式引入映射文件
+    -->
+    <mappers>
+        <!-- 引入用户相关的 SQL 映射文件 -->
+        <mapper resource="mapper/ProductMapper.xml"/>
+        <mapper resource="mapper/Cart_itemMapper.xml"/>
+
+    </mappers>
+
+
+</configuration>

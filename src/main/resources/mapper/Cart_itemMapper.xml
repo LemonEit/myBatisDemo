@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.demo.mapper.Cart_itemMapper">
+    <!-- 添加购物车商品 -->
+    <insert id="addCart_item" parameterType="com.demo.domain.Cart_item">
+        INSERT INTO cart_item (id, name, price, amount, subtotal) VALUES (#{id}, #{name}, #{price}, #{amount},
+        #{subtotal})
+    </insert>
+
+    <!-- 根据商品编号查询购物车商品 -->
+    <select id="selectByProductId" resultType="com.demo.domain.Cart_item">
+        SELECT * FROM cart_item WHERE id = #{id}
+    </select>
+
+    <!-- 更新购物车商品数量和小计 -->
+    <update id="updateCart_item" parameterType="com.demo.domain.Cart_item">
+        UPDATE cart_item SET amount = #{amount}, subtotal = #{subtotal} WHERE id = #{id}
+    </update>
+
+    <!-- 查询所有购物车商品 -->
+    <select id="selectAll" resultType="com.demo.domain.Cart_item">
+        SELECT *
+        FROM cart_item
+    </select>
+</mapper>
