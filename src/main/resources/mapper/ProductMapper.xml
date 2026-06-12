@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.mapper.ProductMapper">
+    <!-- 查询所有商品 -->
+    <select id="selectAll" resultType="com.demo.domain.Product" parameterType="com.demo.domain.Product">
+        select *
+        from product
+    </select>
+
+    <!-- 根据id查询商品 -->
+    <select id="selectById" resultType="com.demo.domain.Product">
+        select * from product where id = #{id}
+    </select>
+
+    <!-- 添加商品 -->
+    <insert id="addProduct" parameterType="com.demo.domain.Product" useGeneratedKeys="true" keyProperty="id"
+            keyColumn="id">
+        insert into product (name, price, color, size, stock) values (#{name}, #{price}, #{color}, #{size}, #{stock})
+    </insert>
+</mapper>
